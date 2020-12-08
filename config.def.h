@@ -7,15 +7,17 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_stafg[]       = "#ebdbb2";
+static const char col_stabg[]       = "#282828";
+static const char col_stabo[]       = "#504945";
+static const char col_altfg[]       = "#282828";
+static const char col_altbg[]       = "#a89984";
+static const char col_altbo[]       = "#a89984";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	/*               fg           bg         border   */
+	[SchemeNorm]   = { col_stafg, col_stabg, col_stabo },
+	[SchemeSel]    = { col_altfg, col_altbg, col_altbo },
+	[SchemeTitle]  = { col_stafg, col_stabg, col_stabo },
 };
 
 /* tagging */
@@ -26,13 +28,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class      instance    title       tags mask     isfloating   isfreesize   monitor */
+	{ "Gimp",     NULL,       NULL,       0,            1,           1,           -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,	      -1 },
+	{ "st",       NULL,       NULL,       0,    	    0,           0,	      -1 },
+	{ "St",       NULL,       NULL,       0,	    0,           0,	      -1 }, /* St with Xresources patch */
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
@@ -56,7 +60,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_stabg, "-nf", col_stafg, "-sb", col_altbg, "-sf", col_altfg, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
